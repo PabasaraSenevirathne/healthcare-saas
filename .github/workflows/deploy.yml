@@ -1,33 +1,21 @@
-name: Deploy to GitHub Pages
+name: Deploy HTML site
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write  # This grants write access to the repository contents
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-
-      - name: Upload HTML file
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: './index.html'  # Uploads just your index.html file
+        uses: actions/checkout@v3
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
-        id: deployment
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .

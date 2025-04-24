@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Monitoring System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a2e;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #0f0f1a;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #00d4ff;
+        }
+
+        .navbar .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #0f0f1a, #16213e);
+            color: #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://picsum.photos/2070/1380') no-repeat center center/cover;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            color: #00d4ff;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero .cta-button {
+            background-color: #00d4ff;
+            color: #0f0f1a;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero .cta-button:hover {
+            background-color: #00a3cc;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1280px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #00d4ff;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Appointment Booking */
+        .appointment-form {
+            background-color: #16213e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .appointment-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        .appointment-form input,
+        .appointment-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #1a1a2e;
+            color: #e2e8f0;
+            transition: border-color 0.3s ease;
+        }
+
+        .appointment-form input:focus,
+        .appointment-form select:focus {
+            border-color: #00d4ff;
+            outline: none;
+        }
+
+        .appointment-form button {
+            background-color: #00d4ff;
+            color: #0f0f1a;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .appointment-form button:hover {
+            background-color: #00a3cc;
+        }
+
+        /* Profile Management */
+        .profile-form {
+            background-color: #16213e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .profile-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #e2e8f0;
+        }
+
+        .profile-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #4a5568;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #1a1a2e;
+            color: #e2e8f0;
+            transition: border-color 0.3s ease;
+        }
+
+        .profile-form input:focus {
+            border-color: #00d4ff;
+            outline: none;
+        }
+
+        .profile-form button {
+            background-color: #00d4ff;
+            color: #0f0f1a;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .profile-form button:hover {
+            background-color: #00a3cc;
+        }
+
+        /* Pro Version Section */
+        .pro-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .pro-card {
+            background-color: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .pro-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pro-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .pro-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        .pro-card p {
+            color: #a0aec0;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .pro-card button {
+            background-color: #00d4ff;
+            color: #0f0f1a;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .pro-card button:hover {
+            background-color: #00a3cc;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        .service-card p {
+            color: #a0aec0;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .service-card button {
+            background-color: #00d4ff;
+            color: #0f0f1a;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .service-card button:hover {
+            background-color: #00a3cc;
+        }
+
+        /* Doctors Section */
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .doctor-card {
+            background-color: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .doctor-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 3px solid #4a5568;
+        }
+
+        .doctor-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        .doctor-card p {
+            color: #a0aec0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .doctor-card .contact-info {
+            color: #a0aec0;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .doctor-card button {
+            background-color: #00d4ff;
+            color: #0f0f1a;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .doctor-card button:hover {
+            background-color: #00a3cc;
+        }
+
+        /* Clinics Section */
+        .clinics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .clinic-card {
+            background-color: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .clinic-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .clinic-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .clinic-card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #00d4ff;
+        }
+
+        .clinic-card p {
+            color: #a0aec0;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .clinic-card .contact-info {
+            color: #a0aec0;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .clinic-card button {
+            background-color: #00d4ff;
+            color: #0f0f1a;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .clinic-card button:hover {
+            background-color: #00a3cc;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: #16213e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .contact-section p {
+            color: #a0aec0;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .contact-section a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0f0f1a;
+            color: #e2e8f0;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .navbar .nav-links a {
+                margin: 10px 15px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero .cta-button {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+
+            .section h2 {
+                font-size: 28px;
+            }
+
+            .appointment-form,
+            .profile-form,
+            .contact-section {
+                padding: 30px;
+            }
+
+            .services-grid,
+            .pro-grid,
+            .doctors-grid,
+            .clinics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">HealthCare</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#pro">Pro Features</a>
+            <a href="#appointment">Book Appointment</a>
+            <a href="#doctors">Doctors</a>
+            <a href="#clinics">Clinics</a>
+            <a href="#profile">My Profile</a>
+            <a href="#contact">Contact</a>
+            <a href="#login">Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Next-Gen Healthcare Monitoring System</h1>
+        <p>Unlock premium healthcare with our Pro version: telemedicine, instant doctor access, and personalized services tailored to your needs.</p>
+        <a href="#pro" class="cta-button">Discover Pro Features</a>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Services Section -->
+        <div class="section" id="services">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=1" alt="Appointment Booking">
+                    <h3>Appointment Booking</h3>
+                    <p>Schedule in-person or virtual appointments with ease.</p>
+                    <button onclick="alert('Explore Appointment Booking')">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=2" alt="Health Analytics">
+                    <h3>Health Analytics</h3>
+                    <p>Track and analyze your health data with AI insights.</p>
+                    <button onclick="alert('Explore Health Analytics')">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=3" alt="Prescription Management">
+                    <h3>Prescription Management</h3>
+                    <p>Manage and refill prescriptions seamlessly.</p>
+                    <button onclick="alert('Explore Prescription Management')">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=4" alt="Mental Health Support">
+                    <h3>Mental Health Support</h3>
+                    <p>Access licensed therapists for virtual counseling sessions.</p>
+                    <button onclick="alert('Explore Mental Health Support')">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=5" alt="Chronic Condition Management">
+                    <h3>Chronic Condition Management</h3>
+                    <p>Personalized plans to manage chronic illnesses effectively.</p>
+                    <button onclick="alert('Explore Chronic Condition Management')">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=6" alt="Telehealth Consultations">
+                    <h3>Telehealth Consultations</h3>
+                    <p>Connect with specialists for remote consultations anytime.</p>
+                    <button onclick="alert('Explore Telehealth Consultations')">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=7" alt="Fitness Tracking Integration">
+                    <h3>Fitness Tracking Integration</h3>
+                    <p>Sync your fitness devices to monitor activity and health goals.</p>
+                    <button onclick="alert('Explore Fitness Tracking Integration')">Learn More</button>
+                </div>
+                <div class="service-card">
+                    <img src="https://picsum.photos/280/150?random=8" alt="Remote Patient Monitoring">
+                    <h3>Remote Patient Monitoring</h3>
+                    <p>Monitor vital signs remotely with connected devices for real-time health updates.</p>
+                    <button onclick="alert('Explore Remote Patient Monitoring')">Learn More</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pro Version Section -->
+        <div class="section" id="pro">
+            <h2>Pro Version Features</h2>
+            <p style="text-align: center; color: #a0aec0; margin-bottom: 30px;">
+                Upgrade to our Pro version for exclusive access to premium healthcare services designed to prioritize your health and convenience. For pricing details, visit <a href="https://x.ai/grok" style="color: #00d4ff;">x.ai/grok</a>.
+            </p>
+            <div class="pro-grid">
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=9" alt="Telemedicine">
+                    <h3>Telemedicine</h3>
+                    <p>Consult with doctors via secure video calls 24/7 from anywhere. Ideal for non-emergency conditions like colds, allergies, or follow-ups.</p>
+                    <button onclick="alert('Upgrade to Pro for Telemedicine')">Upgrade to Pro</button>
+                </div>
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=10" alt="One-Minute Doctor Contact">
+                    <h3>One-Minute Doctor Contact</h3>
+                    <p>Connect with your doctor in under one minute via chat or call for urgent queries or advice.</p>
+                    <button onclick="alert('Upgrade to Pro for One-Minute Contact')">Upgrade to Pro</button>
+                </div>
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=11" alt="Priority Scheduling">
+                    <h3>Priority Scheduling</h3>
+                    <p>Get priority booking slots for appointments, ensuring faster access to doctors and clinics.</p>
+                    <button onclick="alert('Upgrade to Pro for Priority Scheduling')">Upgrade to Pro</button>
+                </div>
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=12" alt="Health Coaching">
+                    <h3>Health Coaching</h3>
+                    <p>Work with certified health coaches to create personalized wellness plans for diet, exercise, and lifestyle.</p>
+                    <button onclick="alert('Upgrade to Pro for Health Coaching')">Upgrade to Pro</button>
+                </div>
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=13" alt="Virtual Lab Reviews">
+                    <h3>Virtual Lab Reviews</h3>
+                    <p>Review lab results with specialists via video calls, with detailed explanations and next steps.</p>
+                    <button onclick="alert('Upgrade to Pro for Virtual Lab Reviews')">Upgrade to Pro</button>
+                </div>
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=14" alt="AI-Powered Health Predictions">
+                    <h3>AI-Powered Health Predictions</h3>
+                    <p>Receive predictive health insights based on your data to prevent potential issues.</p>
+                    <button onclick="alert('Upgrade to Pro for AI-Powered Health Predictions')">Upgrade to Pro</button>
+                </div>
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=15" alt="Premium Support">
+                    <h3>Premium Support</h3>
+                    <p>Access 24/7 priority customer support for all your healthcare needs.</p>
+                    <button onclick="alert('Upgrade to Pro for Premium Support')">Upgrade to Pro</button>
+                </div>
+                <div class="pro-card">
+                    <img src="https://picsum.photos/280/150?random=16" alt="Personalized Medication Reminders">
+                    <h3>Personalized Medication Reminders</h3>
+                    <p>Get tailored reminders to ensure you never miss a dose of your medication.</p>
+                    <button onclick="alert('Upgrade to Pro for Personalized Medication Reminders')">Upgrade to Pro</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointment Booking Section -->
+        <div class="section" id="appointment">
+            <h2>Schedule Your Appointment</h2>
+            <div class="appointment-form">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+
+                <label for="doctor">Select Doctor</label>
+                <select id="doctor">
+                    <option value="">Choose a doctor</option>
+                    <option value="dr1">Dr. John Smith</option>
+                    <option value="dr2">Dr. Sarah Johnson</option>
+                    <option value="dr3">Dr. Michael Lee</option>
+                </select>
+
+                <label for="clinic">Select Clinic</label>
+                <select id="clinic">
+                    <option value="">Choose a clinic</option>
+                    <option value="cl1">City Health Clinic</option>
+                    <option value="cl2">Downtown Medical Center</option>
+                    <option value="cl3">Sunrise Hospital</option>
+                </select>
+
+                <label for="location">Location</label>
+                <select id="location">
+                    <option value="">Choose a location</option>
+                    <option value="loc1">New York, NY</option>
+                    <option value="loc2">Chicago, IL</option>
+                    <option value="loc3">Los Angeles, CA</option>
+                </select>
+
+                <label for="date">Appointment Date</label>
+                <input type="date" id="date" required>
+
+                <label for="time">Preferred Time</label>
+                <input type="time" id="time" required>
+
+                <button onclick="alert('Appointment booked successfully!')">Book Now</button>
+            </div>
+        </div>
+
+        <!-- Profile Management Section -->
+        <div class="section" id="profile">
+            <h2>Manage Your Profile</h2>
+            <div class="profile-form">
+                <label for="profile-name">Full Name</label>
+                <input type="text" id="profile-name" placeholder="Enter your name" required>
+
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+
+                <label for="address">Address</label>
+                <input type="text" id="address" placeholder="Enter your address">
+
+                <label for="medical-history">Medical History (Optional)</label>
+                <input type="text" id="medical-history" placeholder="Enter any medical history">
+
+                <button onclick="alert('Profile updated successfully!')">Save Profile</button>
+            </div>
+        </div>
+
+        <!-- Doctors Section -->
+        <div class="section" id="doctors">
+            <h2>Meet Our Expert Doctors</h2>
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <img src="https://picsum.photos/120/120?random=17" alt="Dr. John Smith">
+                    <h3>Dr. Nimal Senevirathne</h3>
+                    <p>Cardiologist</p>
+                    <div class="contact-info">
+                        <p>Email: john.smith@healthcare.com</p>
+                        <p>Phone: (123) 456-7890</p>
+                        <p>Location: New York, NY</p>
+                    </div>
+                    <button onclick="alert('Booking Dr. John Smith')">Book Appointment</button>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://picsum.photos/120/120?random=18" alt="Dr. Sarah Johnson">
+                    <h3>Dr. Sarath Fernando</h3>
+                    <p>Pediatrician</p>
+                    <div class="contact-info">
+                        <p>Email: sarah.johnson@healthcare.com</p>
+                        <p>Phone: (123) 456-7891</p>
+                        <p>Location: Chicago, IL</p>
+                    </div>
+                    <button onclick="alert('Booking Dr. Sarah Johnson')">Book Appointment</button>
+                </div>
+                <div class="doctor-card">
+                    <img src="https://picsum.photos/120/120?random=19" alt="Dr. Michael Lee">
+                    <h3>Dr. Kumari Weerasinghe</h3>
+                    <p>Neurologist</p>
+                    <div class="contact-info">
+                        <p>Email: michael.lee@healthcare.com</p>
+                        <p>Phone: (123) 456-7892</p>
+                        <p>Location: Los Angeles, CA</p>
+                    </div>
+                    <button onclick="alert('Booking Dr. Michael Lee')">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clinics Section -->
+        <div class="section" id="clinics">
+            <h2>Our Clinics</h2>
+            <div class="clinics-grid">
+                <div class="clinic-card">
+                    <img src="https://picsum.photos/280/150?random=20" alt="City Health Clinic">
+                    <h3>City Health Clinic</h3>
+                    <p>Comprehensive healthcare services</p>
+                    <div class="contact-info">
+                        <p>Address: 123 Main St, New York, NY</p>
+                        <p>Phone: (123) 456-7893</p>
+                        <p>Email: contact@cityhealth.com</p>
+                    </div>
+                    <button onclick="alert('Booking at City Health Clinic')">Book Appointment</button>
+                </div>
+                <div class="clinic-card">
+                    <img src="https://picsum.photos/280/150?random=21" alt="Downtown Medical Center">
+                    <h3>Downtown Medical Center</h3>
+                    <p>Specialized medical care</p>
+                    <div class="contact-info">
+                        <p>Address: 456 Oak Ave, Chicago, IL</p>
+                        <p>Phone: (123) 456-7894</p>
+                        <p>Email: contact@downtownmedical.com</p>
+                    </div>
+                    <button onclick="alert('Booking at Downtown Medical Center')">Book Appointment</button>
+                </div>
+                <div class="clinic-card">
+                    <img src="https://picsum.photos/280/150?random=22" alt="Sunrise Hospital">
+                    <h3>Sunrise Hospital</h3>
+                    <p>Advanced medical facilities</p>
+                    <div class="contact-info">
+                        <p>Address: 789 Pine Rd, Los Angeles, CA</p>
+                        <p>Phone: (123) 456-7895</p>
+                        <p>Email: contact@sunrisehospital.com</p>
+                    </div>
+                    <button onclick="alert('Booking at Sunrise Hospital')">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="section" id="contact">
+            <h2>Contact Us</h2>
+            <div class="contact-section">
+                <p>Have questions? Reach out to our support team.</p>
+                <p>Email: <a href="mailto:support@healthcaresaas.com">support@healthcaresaas.com</a></p>
+                <p>Phone: (123) 456-7896</p>
+                <p>Address: 101 Health St, San Francisco, CA</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 HealthCare SaaS. All rights reserved. Empowering health, one click at a time.</p>
+    </footer>
+</body>
+</html>

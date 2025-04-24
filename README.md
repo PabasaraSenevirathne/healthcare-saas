@@ -52,7 +52,6 @@ For any inquiries or support:
 ---
 
 ## 🔗 Links
-- [Website](https://pabasarasenevirathne.github.io/healthcare-saas)
 - [GitHub Repo](https://github.com/PabasaraSenevirathne/healthcare-saas)
 
 ---
